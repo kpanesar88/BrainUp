@@ -3,3 +3,4 @@ json/liked_posts.json
 json/saved_collections.json
 json/saved_posts.json
 \
+.env
