@@ -4,3 +4,4 @@ json/saved_collections.json
 json/saved_posts.json
 \
 .env
+__pycache__/
