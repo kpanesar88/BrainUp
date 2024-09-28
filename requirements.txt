@@ -1,5 +1,4 @@
-# Downloads instagram data
-insta-scrape
+selenium==4.9.1
+pyfunctional
 
-
-dotenv
+# dot-env
