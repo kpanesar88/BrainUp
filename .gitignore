@@ -5,3 +5,4 @@ json/saved_posts.json
 \
 .env
 __pycache__/
+reels\*

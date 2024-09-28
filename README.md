@@ -1,0 +1,5 @@
+
+.env
+```
+INSTAGRAM_SESSION_ID = \*YOUR SESSION ID*\
+```

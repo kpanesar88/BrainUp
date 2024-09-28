@@ -1,2 +1,5 @@
 # Downloads instagram data
 insta-scrape
+
+
+dotenv
