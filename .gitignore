@@ -1,1 +1,4 @@
-json/*.json
+json/liked_comments.json.
+json/liked_posts.json
+json/saved_collections.json
+json/saved_posts.json
