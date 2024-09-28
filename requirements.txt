@@ -2,3 +2,5 @@ selenium==4.9.1
 pyfunctional
 
 python-dotenv
+
+katna
