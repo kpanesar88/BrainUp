@@ -14,32 +14,6 @@ load_dotenv()
 
 INSTAGRAM_SESSION_ID = os.getenv('INSTAGRAM_SESSION_ID')
 
-# def download_links(links: List[str]) -> bool:
-#     for link in links:
-#         if not download(link):
-#             return False
-        
-#     return True
-# def download(link: str) -> bool:
-    
-#     sample_reel = Reel('https://www.instagram.com/reel/CKWDdesgv2l')
-#     sample_reel.scrape(
-#         headers={
-#             "user-agent": "Mozilla/5.0 (Linux; Android 6.0;",
-#             "cookie":f'sessionid={INSTAGRAM_SESSION_ID};'
-#         }
-#     )
-#     # reeldir = os.getcwd()
-#     sample_reel.download(fp=f"reels\\reel.mp4")
-#     # print(dir)
-#     # print(f"This reel has {sample_reel.video_view_count:,} views.")
-
-# if __name__ == "__main__":
-#     from . import get_links
-
-#     download(get_links(dict()))
-
-
 import time
 import json
 from selenium import webdriver
@@ -76,52 +50,62 @@ def download_mp4(url, save_folder, filename):
     save_file(content, file_path)
     print(f"File saved successfully at: {file_path}")
 
-# Example usage
-
-options = Options()
-
-caps = DesiredCapabilities.CHROME
-caps['goog:loggingPrefs'] = {'performance': 'ALL'}
-
-# options = {"desired_capabilities": caps}
-# options.set_capability('desired_capabilities', caps)
-driver = webdriver.Chrome(
-    executable_path="C:\\chromedriver\\chromedriver.exe",
-    desired_capabilities=caps
-)#options=options)
-driver.get('https://www.instagram.com/p/DAFYGJhxFWG/')
-driver.add_cookie({
-    # "https://www.instagram.com": {
-        "name": "sessionid",
-        "value": INSTAGRAM_SESSION_ID
-    # }
-})
-driver.get('https://www.instagram.com/p/DAFYGJhxFWG/')
-time.sleep(0.25)
-
-
 def process_browser_log_entry(entry):
     response = json.loads(entry['message'])['message']
     return response
+# Example usage
+def download_reels(reel_url: str):
+    options = Options()
 
-browser_log = driver.get_log('performance') 
-urls = (
-    seq(browser_log)
-        .map(process_browser_log_entry)
-        .filter(lambda event: 'Network.requestWillBeSent' in event['method'])
-        .map(lambda event: event["params"])
-        .filter(lambda event: "request" in event)
-        .map(lambda event: event["request"])
-        .map(lambda event: event["url"])
-        .filter(lambda url: ".mp4" in url)
-        .map(lambda url: url[:min(url.index("bytestart"), url.index("byteend"))-1])
-        .set()
-)
+    caps = DesiredCapabilities.CHROME
+    caps['goog:loggingPrefs'] = {'performance': 'ALL'}
 
-print(urls)
+    # options = {"desired_capabilities": caps}
+    # options.set_capability('desired_capabilities', caps)
+    options.add_argument("--disable-gpu")
+    # options.add_argument("--headless=new")
+    options.add_argument("--headless")
+    options.headless = True
+    driver = webdriver.Chrome(
+        executable_path="C:\\chromedriver\\chromedriver.exe",
+        desired_capabilities=caps,
+        options=options
+    )#options=options)
+    driver.get(reel_url)
+    driver.add_cookie({
+        # "https://www.instagram.com": {
+            "name": "sessionid",
+            "value": INSTAGRAM_SESSION_ID
+        # }
+    })
+    driver.get(reel_url)
+    time.sleep(0.25)
 
-for url in urls:
-    save_folder = "reels"
-    filename = f"{hash(url)}.mp4"
-    download_mp4(url, save_folder, filename)
+    browser_log = driver.get_log('performance') 
+    urls = (
+        seq(browser_log)
+            .map(process_browser_log_entry)
+            .filter(lambda event: 'Network.requestWillBeSent' in event['method'])
+            .map(lambda event: event["params"])
+            .filter(lambda event: "request" in event)
+            .map(lambda event: event["request"])
+            .map(lambda event: event["url"])
+            .filter(lambda url: ".mp4" in url)
+            .map(lambda url: url[:min(url.index("bytestart"), url.index("byteend"))-1])
+            .set()
+    )
+
+    print(urls)
+
+    videos = []
+
+    for url in urls:
+        save_folder = "reels"
+        filename = f"{hash(url)}.mp4"
+        download_mp4(url, save_folder, filename)
+        time.sleep(0.25)
+
+        videos.append(filename)
+
+    return videos
 # url

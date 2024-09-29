@@ -1,19 +1,35 @@
 from typing import List, Dict, Any, Set
 import os
 import json
+import time
 
 # Define the directory containing your JSON files
 json_directory = 'json'  # Make sure this folder is in the same directory as your script
 output_file = 'extracted_hrefs.json'  # Output file to save the extracted hrefs
 
+
+def is_older_than_a_month(timestamp: int) -> bool:
+    # Get the current time in seconds since the epoch
+    current_time = time.time()
+    
+    # Calculate the time for one month (assuming 30 days)
+    one_month_in_seconds = 30 * 24 * 60 * 60
+    
+    # Check if the given timestamp is older than a month
+    return current_time - timestamp > one_month_in_seconds
+
 def extract_hrefs(data, all_hrefs: Set[str]):
     """Recursively extract hrefs from the JSON data."""
     if isinstance(data, dict):  # If data is a dictionary
-        for key, value in data.items():
-            if key == 'href' and isinstance(value, str):  # If the key is 'href'
-                all_hrefs.add(value)  # Add href to the set for uniqueness
-            else:
-                extract_hrefs(value, all_hrefs)  # Recursively search in values
+        if "timestamp" in data:
+            if is_older_than_a_month(data["timestamp"]):
+                return
+        
+        if "href" in data and isinstance(data["href"], str):
+            all_hrefs.add(data["href"])
+        else:
+            for _key, value in data.items():
+                extract_hrefs(value, all_hrefs)
     elif isinstance(data, list):  # If data is a list
         for item in data:
             extract_hrefs(item, all_hrefs)  # Recursively search in items
