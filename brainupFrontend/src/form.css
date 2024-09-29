@@ -1,0 +1,59 @@
+.text-input{
+    width: 20%;
+    height: 30px;
+    font-size: 18px;
+    font-family: "Monaco", monospace;
+    color: #000000;
+    padding: 5px;
+    position : relative;
+    left: 40%;
+    margin-top: -24%;
+}
+
+.text-input input{
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 18px;
+    font-family: "Monaco", monospace;
+    color: #000000;
+    padding: 5px;
+}
+
+.file-upload{
+    background-color: #D9D9D9;
+    border: 2px dashed #cccccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    position : relative;
+    left: 29%;
+    width: 40%;
+    margin-top: 2%;
+    height: 100px;
+}
+
+.file-upload p {
+    margin: 0;
+    font-size: 18px;
+    font-family: "Monaco", monospace;
+    color: #000000;
+    margin-top: 20px;
+}
+p.brainrot-msg {
+    color: #7B79FA;
+}
+
+.submit {
+    background-color: #7B79FA;
+    color: white;
+    font-size: 18px;
+    font-family: "Monaco", monospace;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    position : relative;
+    left: 1%;
+    margin-top: 2%;
+    width: 22%;
+}
