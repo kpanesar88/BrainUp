@@ -1,29 +1,64 @@
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource, abort
+from flask_cors import CORS
 
-import scraper
+from . import scraper
 from src.hobby_extraction import create_pipeline
 
-pipeline = create_pipeline()
+from multiprocessing import freeze_support
+
+pipeline = None
+pipeline_in_use = False
 
 app = Flask(__name__)
-api = Api(app)
+CORS(app)
+# api = Api(app)
 
-class hobby_card(Resource):
-	def get(self, hobby, location):
-		global pipeline
+@app.route('/hobby_card', methods=['POST'])
+def hobby_card():
+	global pipeline
 
-		# scrapper (downloads reels)
+	# json = request.json
 
-		# hobby = pipeline([all files downloaded])
+	print(request.form)
 
-		pre_result = scraper.scraper(location, hobby)
-		result = {"hobby": hobby, "name": pre_result[0], "location": pre_result[1], "description": pre_result[2], "image": pre_result[3], "url": pre_result[4]}
-		if not result:
-			abort(404, message="Could not find any classes in your area")
-		return result
+	location = request.form['text']
+	files = request.form['files']
 
-api.add_resource(hobby_card, "/card/<string:hobby>/<string:location>/")
+	print(location)
+	print(files)
+
+	return 200, "Hello world"
+
+	# scrapper (downloads reels)
+
+	# hobby = pipeline([all files downloaded])
+
+	pre_result = scraper.scraper(location, hobby)
+	result = {"hobby": hobby, "name": pre_result[0], "location": pre_result[1], "description": pre_result[2], "image": pre_result[3], "url": pre_result[4]}
+	if not result:
+		abort(404, message="Could not find any classes in your area")
+	return result
+
+# class hobby_card(Resource):
+# 	def get(self, hobby, location):
+# 		global pipeline
+
+# 		print("")
+
+# 		# scrapper (downloads reels)
+
+# 		# hobby = pipeline([all files downloaded])
+
+# 		pre_result = scraper.scraper(location, hobby)
+# 		result = {"hobby": hobby, "name": pre_result[0], "location": pre_result[1], "description": pre_result[2], "image": pre_result[3], "url": pre_result[4]}
+# 		if not result:
+# 			abort(404, message="Could not find any classes in your area")
+# 		return result
+
+# api.add_resource(hobby_card, "/card/<string:hobby>/<string:location>/")
 
 if __name__ == "__main__":
-	app.run(debug=False)
+	freeze_support()
+	pipeline = create_pipeline()
+	app.run(debug=False, port=4000)

@@ -1,4 +1,7 @@
 from typing import List
+
+from multiprocessing import freeze_support
+
 from Katna.video import Video
 from Katna.writer import KeyFrameDiskWriter
 import os
@@ -31,4 +34,5 @@ def extract_frames(video_name: str, frame_count: int = 12) -> List[str]:
 
 if __name__ == "__main__":
     # Get key frames
+    freeze_support()
     print(extract_frames("4018179579686853922.mp4"))

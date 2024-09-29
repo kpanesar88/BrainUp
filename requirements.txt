@@ -11,3 +11,6 @@ transformers
 sentence-transformers
 glinER
 sklearn
+
+flask_restful
+flask-cors
