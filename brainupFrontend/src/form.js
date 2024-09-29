@@ -31,7 +31,7 @@ const FileUpload = () => {
     });
 
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:8000/upload", true);
+    xhr.open("POST", "http://localhost:4000/hobby_card", true);
 
     xhr.upload.onprogress = (progressEvent) => {
       const percentCompleted = Math.round(
