@@ -1,6 +1,10 @@
+--extra-index-url https://download.pytorch.org/whl/cu116
 selenium==4.9.1
 pyfunctional
 
 python-dotenv
 
 katna
+
+torch
+transformers
