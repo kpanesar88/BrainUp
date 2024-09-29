@@ -9,7 +9,7 @@ import torch
 
 def load_model():
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    model = SentenceTransformer("microsoft/mpnet-base", device=device)
+    model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2", device=device)
 
     def eval(input_val: str) -> Tuple[str, List[float]]:
         embedding = []
