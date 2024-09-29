@@ -89,14 +89,14 @@ driver = webdriver.Chrome(
     executable_path="C:\\chromedriver\\chromedriver.exe",
     desired_capabilities=caps
 )#options=options)
-driver.get('https://www.instagram.com/reel/Cccgd2MFCs4/')
+driver.get('https://www.instagram.com/p/DAFYGJhxFWG/')
 driver.add_cookie({
     # "https://www.instagram.com": {
         "name": "sessionid",
         "value": INSTAGRAM_SESSION_ID
     # }
 })
-driver.get('https://www.instagram.com/reel/Cccgd2MFCs4/')
+driver.get('https://www.instagram.com/p/DAFYGJhxFWG/')
 time.sleep(0.25)
 
 

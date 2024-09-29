@@ -18,16 +18,27 @@ const FileUpload = () => {
     },
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     setIsFormVisible(false);
 
+    const fileContents = await Promise.all(
+      uploadedFiles.map((file) => {
+        return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsText(file);
+      });
+      })
+    );
+
     // send get request to server with text and uploaded files
     const formData = new FormData();
     formData.append("text", text);
-    uploadedFiles.forEach((file) => {
-      formData.append("files", file);
+    fileContents.forEach((content, index) => {
+      formData.append(`file${index}`, content);
     });
 
     const xhr = new XMLHttpRequest();
@@ -70,6 +81,8 @@ const FileUpload = () => {
               type="text"
               placeholder="Enter your city"
               name="locationInput"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             />
           </div>
           <div {...getRootProps()} className="file-upload">
