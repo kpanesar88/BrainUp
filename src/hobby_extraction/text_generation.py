@@ -1,6 +1,7 @@
 from ..model_initialization import initialize
 initialize()
 
+from typing import List
 import os
 
 import torch
@@ -8,39 +9,54 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from torch.quantization import quantize_dynamic
 
-model = "mistralai/Mistral-7B-Instruct-v0.3"
+from gliner.model import GLiNER
+
+from functional import seq
+
 access_token = os.environ['ACCESS_TOKEN']
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-tokenizer = AutoTokenizer.from_pretrained(model, token=access_token)
-model = AutoModelForCausalLM.from_pretrained(model, token=access_token)
-# model.half()
+def load_model():
+    model_name = "mistralai/Mistral-7B-Instruct-v0.3"
 
-model.config.pad_token_id = model.config.eos_token_id
-# model.half()
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    tokenizer = AutoTokenizer.from_pretrained(model_name, token=access_token)
+    model = AutoModelForCausalLM.from_pretrained(model_name, token=access_token)
+    # model.half()
 
-model.to(device)
+    model.config.pad_token_id = model.config.eos_token_id
+    # model.half()
 
-prompt = """What are some hobbies that would recommend based on the following prompts:
-- A man skate boarding down a hill.
-- A women surfing in australia.
+    model.to(device)
 
-answer with 3 words without explanation:
-"""
+    ner_model = GLiNER.from_pretrained("urchade/gliner_base")
 
-inputs = tokenizer(prompt, return_tensors="pt").to(device)
+    def eval(examples: List[str]) -> List[str]:
+        examples = ['- '+example for example in examples].join('\n')
+        prompt = f"What are some hobbies that would recommend based on the following prompts:\n{examples}\nanswer with 3 words without explanation:\n"
 
-outputs = model.generate(**inputs, max_new_tokens=20)
+        inputs = tokenizer(prompt, return_tensors="pt").to(device)
 
-answer = tokenizer.decode(outputs[0], skip_special_tokens=True)[len(prompt):].strip()
+        outputs = model.generate(**inputs, max_new_tokens=20)
 
-print(answer)
+        answer = tokenizer.decode(outputs[0], skip_special_tokens=True)[len(prompt):].strip()
 
-from gliner.model import GLiNER
-ner_model = GLiNER.from_pretrained("urchade/gliner_base")
+        labels = ner_model.predict_entities(answer, ["Hobbies"])
+        return (seq(labels)
+            .map(lambda x: x["text"])
+            .list()
+        )
 
-print(ner_model.predict_entities(answer, ["Hobbies"]))
+    return eval
 
 
+if __name__ == "__main__":
+    model = load_model()
 
+    print(
+        model([
+            "A girl is snowboarding down a hill.",
+            "A guy is longboarding down a hill",
+            "A group skies across the mountain"
+        ])
+    )
 

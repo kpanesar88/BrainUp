@@ -9,4 +9,5 @@ katna
 torch
 transformers
 sentence-transformers
-GLiNER
+glinER
+sklearn

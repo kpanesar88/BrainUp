@@ -3,6 +3,13 @@ from Katna.video import Video
 from Katna.writer import KeyFrameDiskWriter
 import os
 
+def load_model():
+    def _tmp(video_name) -> List[str]:
+        return extract_frames(
+            video_name
+        )
+    return _tmp
+
 def extract_frames(video_name: str, frame_count: int = 12) -> List[str]:
     vd = Video()
 
@@ -17,7 +24,7 @@ def extract_frames(video_name: str, frame_count: int = 12) -> List[str]:
     )
 
     files = [
-        f"{video_file_path[5:-4]}_{i}.jpeg" for i in range(frame_count) 
+        f"{video_name[:-4]}_{i}.jpeg" for i in range(frame_count) 
     ]
 
     return files

@@ -10,11 +10,13 @@ def load_model() -> Callable[[str], str]:
     whisper = pipeline("automatic-speech-recognition", "openai/whisper-small", device="cuda")
 
     def get_transcript(source: str) -> str:
-        transcription = whisper(source)
-
+        try:
+            transcription = whisper(source)
+            return transcription["text"]
+        except Exception as e:
+            return ""
         # maybe split based on sentences
 
-        return transcription["text"]
     
     return get_transcript
     
