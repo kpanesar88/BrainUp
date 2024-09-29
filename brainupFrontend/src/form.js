@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import "./form.css";
 
 const FileUpload = () => {
-  const navigate = useNavigate();
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [text, setText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isFormVisible, setIsFormVisible] = useState(true);
+  const navigate = useNavigate();
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -23,42 +23,42 @@ const FileUpload = () => {
     setIsLoading(true);
     setIsFormVisible(false);
 
-    // // send get request to server with text and uploaded files
-    // const formData = new FormData();
-    // formData.append("text", text);
-    // uploadedFiles.forEach((file) => {
-    //   formData.append("files", file);
-    // });
+    // send get request to server with text and uploaded files
+    const formData = new FormData();
+    formData.append("text", text);
+    uploadedFiles.forEach((file) => {
+      formData.append("files", file);
+    });
 
-    // const xhr = new XMLHttpRequest();
-    // xhr.open("POST", "http://localhost:8000/upload", true);
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:8000/upload", true);
 
-    // xhr.upload.onprogress = (progressEvent) => {
-    //   const percentCompleted = Math.round(
-    //     (progressEvent.loaded * 100) / progressEvent.total
-    //   );
-    //   setProgress(percentCompleted);
-    // };
+    xhr.upload.onprogress = (progressEvent) => {
+      const percentCompleted = Math.round(
+        (progressEvent.loaded * 100) / progressEvent.total
+      );
+      setProgress(percentCompleted);
+    };
 
-    // xhr.onload = () => {
-    //   if (xhr.status === 200) {
-    //     const response = JSON.parse(xhr.responseText);
-    //     console.log(response);
-    //     setIsLoading(false);
-    //   } else {
-    //     console.error("Error:", xhr.statusText);
-    //     setIsLoading(false);
-    //   }
-    // };
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log(response);
+        setIsLoading(false);
+        navigate("/results", { state: { processedData: response } });
+      } else {
+        console.error("Error:", xhr.statusText);
+        setIsLoading(false);
+      }
+    };
 
-    // xhr.onerror = () => {
-    //   console.error("Error:", xhr.statusText);
-    //   setIsLoading(false);
-    // };
+    xhr.onerror = () => {
+      console.error("Error:", xhr.statusText);
+      setIsLoading(false);
+    };
 
-    // xhr.send(formData);
+    xhr.send(formData);
 
-    navigate("/results", { state: { processedData: uploadedFiles } });
   };
   return (
     <div className="form-container">

@@ -8,11 +8,6 @@ const Results = () => {
 
   return (
     <div className="page-container">
-      {processedData.map((data, index) => (
-        <div key={index} className={`bgimg${index + 1}`}>
-            <img src={data.image} alt={`Background ${index + 1}`} />
-        </div>
-      ))}
       <div className="results-container">
         <div className="results-text">
           <h1>Based off your reels, try this out</h1>
@@ -20,10 +15,10 @@ const Results = () => {
         <div className="results-display">
           {processedData.map((data, index) => (
             <div key={index} className="result">
-              <h3>{data.title}</h3>
-              <p>{data.contact}</p>
-              <p>{data.description}</p>
-              <img src={data.classImage} alt={`Class Image ${index + 1}`}/>
+              <a href={data.url} className="class-link">{data.hobby}</a>
+              <p className="class-name">{data.name}</p>
+              <p className="class-desc">{data.description}</p>
+              <img src={data.image} alt="Class" className="class-img"/>
             </div>
           ))}
         </div>
