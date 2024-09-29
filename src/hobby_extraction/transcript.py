@@ -7,7 +7,7 @@ import torch
 from transformers import pipeline
 
 def load_model() -> Callable[[str], str]:
-    whisper = pipeline("automatic-speech-recognition", "openai/whisper-small", device="cuda")
+    whisper = pipeline("automatic-speech-recognition", "openai/whisper-small", device="cpu")#"cuda")
 
     def get_transcript(source: str) -> str:
         try:

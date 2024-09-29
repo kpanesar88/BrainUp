@@ -8,7 +8,7 @@ from sentence_transformers import SentenceTransformer
 import torch
 
 def load_model():
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = "cpu"# "cuda" if torch.cuda.is_available() else "cpu"
     model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2", device=device)
 
     def eval(input_val: str) -> Tuple[str, List[float]]:

@@ -14,6 +14,7 @@ def load_model():
     processor = Blip2Processor.from_pretrained(
         f"Salesforce/blip2-opt-2.7b",
     )
+    # processor
     #"Salesforce/blip2-opt-2.7b",#
     model = Blip2ForConditionalGeneration.from_pretrained(
         f"Salesforce/blip2-opt-2.7b",

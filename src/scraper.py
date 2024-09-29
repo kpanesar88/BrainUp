@@ -14,8 +14,8 @@ def scraper(sample_City,what_to_search):
     listing_description = "Test-description"
     listing_address = "Test-address"
 
-    sample_City = "ottawa"
-    what_to_search = "Painting Classes"
+    # sample_City = "ottawa"
+    # what_to_search = "Painting Classes"
 
     # Initialize the webdriver
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
