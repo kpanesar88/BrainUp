@@ -26,11 +26,11 @@ const FileUpload = () => {
     const fileContents = await Promise.all(
       uploadedFiles.map((file) => {
         return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsText(file);
-      });
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsText(file);
+        });
       })
     );
 

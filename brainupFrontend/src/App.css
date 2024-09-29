@@ -4,7 +4,7 @@
 
 .App-logo {
   height: 40vmin;
-  margin-top: -20%;
+  margin-top: -10%;
   pointer-events: none;
   position: relative;
   left: 0%;
@@ -36,6 +36,24 @@
   pointer-events: none;
   position: relative;
   left: -45%;
+}
+
+.instareel-logo {
+  height: 350px;
+  margin-top: -20%;
+  pointer-events: none;
+  position: relative;
+  left: 35%;
+  rotate: 20deg;
+}
+
+.instareel-cat-logo {
+  height: 350px;
+  margin-top: -20%;
+  pointer-events: none;
+  position: relative;
+  left: -35%;
+  rotate: 350deg;
 }
 
 .slogan {

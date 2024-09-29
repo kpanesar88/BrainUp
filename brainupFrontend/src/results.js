@@ -14,7 +14,7 @@ const Results = () => {
         </div>
         <div className="results-display">
           {processedData.map((data, index) => (
-            <div key={index} className="result">
+            <div className="result">
               <a href={data.url} className="class-link">{data.hobby}</a>
               <p className="class-name">{data.name}</p>
               <p className="class-desc">{data.description}</p>
