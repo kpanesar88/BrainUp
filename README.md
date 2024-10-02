@@ -1,5 +1,6 @@
 
-![BrainUp logo](https://github.com/user-attachments/assets/f30a7087-b48c-4850-83f3-20c14564f583)
+![BrainUp logo](https://github.com/user-attachments/assets/f30a7087-b48c-4850-83f3-20c14564f583)    
+
 #Check out our pitch slide-deck [here!](https://docs.google.com/presentation/d/19a7ouUCTQGIpuUiWzWxoP3Z_nMsN9VgIaNxoHqfCtaI/edit?usp=sharing)
 # Inspiration
 Each of us has experience with Brainrot from insta reels and TikTok, so we created a data analytics tool that allows users to use the data that they've accumulated through their use of social media sites, and searches it for hobbies they might enjoy, it then helps these users take the first step toward partaking in these hobbies
