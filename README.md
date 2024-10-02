@@ -1,5 +1,7 @@
+
+![BrainUp logo](https://github.com/user-attachments/assets/f30a7087-b48c-4850-83f3-20c14564f583)
 # Inspiration
-Each of us has experience with Brainrot from insta reels and TikTok
+Each of us has experience with Brainrot from insta reels and TikTok, so we created a data analytics tool that allows users to use the data that they've accumulated through their use of social media sites, and searches it for hobbies they might enjoy, it then helps these users take the first step toward partaking in these hobbies
 
 # What it does
 takes in user instagram data and uses AI to process the data and creates a recommended activity that is given to user so that they can be productive
